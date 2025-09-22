@@ -40,6 +40,13 @@ class TestBooksCollector:
         collector.add_new_book("Воспитание чувств")
         assert collector.get_book_genre("Воспитание чувств") == ""
     
+    def test_get_book_genre_returns_correct_genre(self):
+        collector = BooksCollector()
+        collector.add_new_book("Книга 1")
+        collector.set_book_genre("Книга 1", "Фантастика")
+        result = collector.get_book_genre ("Книга 1")
+        assert result == "Фантастика"
+    
     def test_set_book_genre_valid_genre(self):
         collector = BooksCollector()
         collector.add_new_book("Двадцать тысяч лье под водой")
@@ -84,13 +91,17 @@ class TestBooksCollector:
         collector.set_book_genre("Детская книга", genre)
         assert "Детская книга" in collector.get_books_for_children()
     
-    def test_add_and_delete_book_in_favorites(self):
+    def test_add_book_in_favorites(self):
         collector = BooksCollector()
         collector.add_new_book("Книга 1")
         collector.add_book_in_favorites("Книга 1")
         assert collector.get_list_of_favorites_books() == ["Книга 1"]
 
-        collector.delete_book_from_favorites("Книга 1")
+    def test_delete_book_from_favorites(self):
+        collector = BooksCollector()
+        collector.add_new_book("Книга 1")
+        collector.add_book_in_favorites("Книга 1")
+        collector.delete_book_from_favorites ("Книга 1")
         assert collector.get_list_of_favorites_books() == []
 
     def test_add_book_in_favorites_does_not_add_twice(self):
